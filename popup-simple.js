@@ -2,12 +2,25 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   console.log('🚀 简化版AI助手开始初始化...');
-  
+
+  // 标记JavaScript已加载
+  document.body.classList.add('js-loaded');
+
   // 获取元素
   const settingsTab = document.getElementById('settingsTab');
   const chatTab = document.getElementById('chatTab');
   const settingsPage = document.getElementById('settingsPage');
   const chatPage = document.getElementById('chatPage');
+
+  // 立即检查是否应该显示对话页面，避免设置页面闪现
+  chrome.storage.sync.get(['baseUrl', 'modelName', 'apiKey'], function(result) {
+    if (result.apiKey && result.baseUrl && result.modelName) {
+      console.log('🔄 检测到完整配置，立即切换到对话页面');
+      // 立即切换，不使用延迟
+      switchTab('chat');
+    }
+    // 如果配置不完整，设置页面已经是默认显示的，不需要额外操作
+  });
   const saveSettingsBtn = document.getElementById('saveSettingsBtn');
   const settingsStatus = document.getElementById('settingsStatus');
   const baseUrlInput = document.getElementById('baseUrl');
@@ -41,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // 页面切换
   function switchTab(tabName) {
     console.log(`🔄 切换到: ${tabName}`);
-    
+
     if (settingsTab && chatTab && settingsPage && chatPage) {
       settingsTab.classList.toggle('active', tabName === 'settings');
       chatTab.classList.toggle('active', tabName === 'chat');
@@ -146,12 +159,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         console.log('✅ 设置加载完成');
-        
-        // 如果有完整配置，切换到对话页面
-        if (result.apiKey && result.baseUrl && result.modelName) {
-          console.log('🔄 检测到完整配置，切换到对话页面');
-          setTimeout(() => switchTab('chat'), 100);
-        }
       });
     } catch (error) {
       console.error('❌ 加载异常:', error);

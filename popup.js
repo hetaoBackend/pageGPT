@@ -1,11 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log('🚀 PageGPT插件开始初始化...');
 
+  // 标记JavaScript已加载
+  document.body.classList.add('js-loaded');
+
   // 页面切换相关元素
   const settingsTab = document.getElementById('settingsTab');
   const chatTab = document.getElementById('chatTab');
   const settingsPage = document.getElementById('settingsPage');
   const chatPage = document.getElementById('chatPage');
+
+  // 立即检查是否应该显示对话页面，避免设置页面闪现
+  chrome.storage.sync.get(['baseUrl', 'modelName', 'apiKey'], function(result) {
+    if (result.apiKey && result.baseUrl && result.modelName) {
+      console.log('🔄 检测到完整配置，立即切换到对话页面');
+      // 立即切换，不使用延迟
+      switchTab('chat');
+    }
+    // 如果配置不完整，设置页面已经是默认显示的，不需要额外操作
+  });
 
   // 设置页面元素
   const baseUrlInput = document.getElementById('baseUrl');
@@ -110,12 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       console.log('✅ 设置加载完成');
-
-      // 如果已有配置，自动切换到对话页面
-      if (result.apiKey && result.baseUrl && result.modelName) {
-        console.log('🔄 检测到完整配置，自动切换到对话页面');
-        setTimeout(() => switchTab('chat'), 100);
-      }
     });
   } catch (error) {
     console.error('❌ 加载设置时发生异常:', error);

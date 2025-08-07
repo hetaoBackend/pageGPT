@@ -86,6 +86,11 @@
       transform: translateX(100%);
     }
 
+    /* 在JavaScript加载前隐藏对话页面，避免闪现 */
+    body:not(.js-loaded) #chatPage {
+      transform: translateX(100%);
+    }
+
     /* 设置页面样式 */
     .settings-page {
       background: white;
