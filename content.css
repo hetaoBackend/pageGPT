@@ -1,0 +1,143 @@
+/* AI助手弹窗样式 */
+#ai-assistant-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#ai-assistant-overlay.show {
+  opacity: 1;
+}
+
+.ai-popup {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  transform: scale(0.8) translateY(20px);
+  transition: transform 0.3s ease;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#ai-assistant-overlay.show .ai-popup {
+  transform: scale(1) translateY(0);
+}
+
+.ai-popup-header {
+  display: flex;
+  align-items: center;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-popup-icon {
+  font-size: 24px;
+  margin-right: 12px;
+}
+
+.ai-popup-title {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.ai-popup-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.ai-popup-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ai-popup-content {
+  padding: 20px 24px;
+}
+
+.ai-popup-content p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.ai-popup-footer {
+  padding: 16px 24px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-popup-footer small {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+  .ai-popup {
+    margin: 20px;
+    width: calc(100% - 40px);
+  }
+  
+  .ai-popup-header,
+  .ai-popup-content,
+  .ai-popup-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .ai-popup-content p {
+    font-size: 14px;
+  }
+}
+
+/* 动画效果 */
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.ai-popup-content {
+  animation: slideInUp 0.4s ease 0.1s both;
+}
+
+/* 确保弹窗在所有元素之上 */
+#ai-assistant-overlay * {
+  box-sizing: border-box;
+}
+
+/* 防止页面滚动 */
+body.ai-popup-open {
+  overflow: hidden;
+}

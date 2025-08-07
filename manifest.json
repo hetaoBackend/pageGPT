@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "PageGPT",
+  "version": "1.0.0",
+  "description": "智能网页对话助手，让AI帮你理解任何网页内容",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "PageGPT"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png", 
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup-overlay.html", "popup-overlay.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
